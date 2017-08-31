@@ -6,7 +6,7 @@ cc_library(
   deps = [
     '//Common/Base:Base',
   ],
-  extra_cppflags = ['-Werror=write-strings'],
+  extra_cppflags = ['-std=c++11', '-pthread']
 )
 
 cc_binary(name = 'KVTest',
@@ -15,6 +15,7 @@ cc_binary(name = 'KVTest',
         ':KVSchedule',
         '//Common/Base:Base',
         '//Common/ThirdParty/gperftools-2.0/src:tcmalloc_minimal',
+        '//Common/Util/Thread:thread',
     ],
     optimize = ['O3'],
     extra_cppflags = ['-fno-omit-frame-pointer','-Wl,--eh-frame-hdr', '-ltcmalloc'],

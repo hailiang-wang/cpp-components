@@ -1,16 +1,29 @@
-# cpp-scheduler
-Scheduler to fetch data
+# C Plus Plus in Action
 
-## Dev
+## Build Tool
+https://github.com/chen3feng/typhoon-blade
+
+## Dev with docker
+https://hub.docker.com/r/samurais/blade/
+
+## Project skeleton
 ```
-./Shell/dev.sh
-```
-After login docker
-```
-cd /workarea/projects/Shell
-./liveload.sh
+skeleton
 ```
 
-## KVSchedule, KVJob
+## Components
 
-通过智能指针，维护一个Object，支持使用定期轮巡更新Object。
+* lcs
+find Longest Common String for two strings.
+
+* json
+JSON.parse(), JSON.stringify().
+
+* scheduler
+Do job with a separate thread and manage objects with smart pointer - shared_ptr.
+
+* restapi
+Send Request and Parse Response wth JSON Object and Curl Wrapper.
+
+* trietree
+A trietree is a data structure.

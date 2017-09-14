@@ -34,14 +34,24 @@ class Connect{
     void handle(std::string& req, std::string& res);
 };
 
-class ParseMw: public Middleware
+class Mw1: public Middleware
 {
 public: // constructor
-    ParseMw();
-    ~ParseMw();
+    Mw1();
+    ~Mw1();
 public: // functions
     void apply(std::string& req, std::string& res);
 };
+
+class Mw2: public Middleware
+{
+public: // constructor
+    Mw2();
+    ~Mw2();
+public: // functions
+    void apply(std::string& req, std::string& res);
+};
+
 }
 } // Connect
 

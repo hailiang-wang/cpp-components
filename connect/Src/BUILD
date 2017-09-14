@@ -5,5 +5,5 @@ cc_binary(name = 'Connect',
         '//Common/ThirdParty/gperftools-2.0/src:tcmalloc_minimal',
     ],
     optimize = ['O3'],
-    extra_cppflags = ['-fno-omit-frame-pointer','-Wl,--eh-frame-hdr', '-ltcmalloc', '-std=c++14'],
+    extra_cppflags = ['-fno-omit-frame-pointer','-Wl,--eh-frame-hdr', '-ltcmalloc', '-std=c++11'],
 )

@@ -1,3 +1,10 @@
+//
+//  connect.h
+//  Connect
+//
+//  Created by Hai Liang Wang<hailiang.hl.wang@gmail.com> on 17/09/14.
+//  Copyright © 2017. All rights reserved.
+//
 #ifndef  CONNECT_MW_H_
 #define  CONNECT_MW_H_
 

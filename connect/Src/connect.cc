@@ -1,3 +1,10 @@
+//
+//  connect.cc
+//  Connect: programming model with onion architecture.
+//
+//  Created by Hai Liang Wang<hailiang.hl.wang@gmail.com> on 17/09/14.
+//  Copyright © 2017. All rights reserved.
+//
 #include "connect.h"
 
 #include <iostream>
@@ -76,6 +83,12 @@ int main(int argc, char const *argv[])
     std::string req = "query    ...";
     std::string res = "response ...";
     app.handle(req, res);
+    /**
+     * Mw1 req:query    ..., res:response ...
+     * Mw2 req:query    ..., res:response ...
+     * Mw2 req2:query    ..., res2:response ... Mw2 apply-before-next
+     * Mw1 req2:query    ..., res2:response ... Mw2 apply-before-next Mw2 apply-post-next
+     */
 
     return 0;
 }

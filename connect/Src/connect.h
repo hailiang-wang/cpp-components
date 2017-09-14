@@ -21,7 +21,7 @@ class Middleware
  public:
     Middleware();
     virtual ~Middleware();
-    virtual void apply(std::string& req, std::string& res, std::function<void() > next) = 0;
+    virtual void apply(std::string& req, std::string& res, std::function<void() >& next) = 0;
 };
 
 class Connect{
@@ -42,7 +42,7 @@ public: // constructor
     ~Mw1();
 public: // functions
     // void apply(std::string& req, std::string& res, std::vector<Middleware* >::iterator& next);
-    void apply(std::string& req, std::string& res, std::function<void() > next);
+    void apply(std::string& req, std::string& res, std::function<void() >& next);
     
 };
 
@@ -52,7 +52,7 @@ public: // constructor
     Mw2();
     ~Mw2();
 public: // functions
-    void apply(std::string& req, std::string& res, std::function<void() > next);
+    void apply(std::string& req, std::string& res, std::function<void() >& next);
 };
 
 }

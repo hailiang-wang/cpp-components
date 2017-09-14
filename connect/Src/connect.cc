@@ -20,46 +20,26 @@ void Connect::use(Middleware& mw)
 }
 
 void Connect::handle(std::string& req, std::string& res){
-    std::cout << "handle: " << req <<endl;
-    std::string nx = "next";
-    std::vector<Middleware* >::iterator it = _middlewares.begin();
-
-    auto glambda = [=]() mutable {
-        if (it != _middlewares.end()){
-            std::vector<Middleware* >::iterator it2 = it + 1;
-            (*it2)->apply(req, res, [=]() mutable {
-                if (it2 != _middlewares.end()){
-                    std::vector<Middleware* >::iterator it3 = it2 + 1;
-                    if(it3 != _middlewares.end()){
-                        (*it3)->apply(req, res, [=]() mutable {
-                            // ugly code: add more to support more ...
-                        });
-                    } else {
-                        std::cout << "this is end." <<endl;
-                    }
-                }
-            });
+    std::vector<Middleware* >::iterator next = _middlewares.begin();
+    std::vector<Middleware* >::const_iterator end = _middlewares.end();
+    
+    std::function<void() > compose;
+    compose = [&]() mutable {
+        if (next != _middlewares.end()){
+            next = next + 1;
+            if(next!=end){
+                (*next)->apply(req, res, compose);
+            }
         }
     };
 
-    (*it)->apply(req, res, glambda);
-
-    // while(true){
-    //     pre = std::distance(_middlewares.begin(), it);
-    //     (*it)->apply(req, res, it, [it](std::vector<Middleware* >::iterator& ptr) -> void {
-    //         ptr++;
-    //     });
-    //     post = std::distance(_middlewares.begin(), it);
-    //     if(pre == post){
-    //         break;
-    //     }
-    // }
+    (*next)->apply(req, res, compose);
 }
 
 Mw1::Mw1(){};
 Mw1::~Mw1(){};
 
-void Mw1::apply(std::string& req, std::string& res, std::function<void() > next){
+void Mw1::apply(std::string& req, std::string& res, std::function<void() >& next){
     std::cout<< "Mw1 req:" << req <<", res:" << res << endl;
     next();
     std::cout<< "Mw1 req2:" << req <<", res2:" << res << endl;
@@ -68,10 +48,12 @@ void Mw1::apply(std::string& req, std::string& res, std::function<void() > next)
 Mw2::Mw2(){};
 Mw2::~Mw2(){};
 
-void Mw2::apply(std::string& req, std::string& res, std::function<void() > next){
+void Mw2::apply(std::string& req, std::string& res, std::function<void() >& next){
     std::cout<< "Mw2 req:" << req <<", res:" << res << endl;
+    res += " Mw2 apply-before-next";
     next();
     std::cout<< "Mw2 req2:" << req <<", res2:" << res << endl;
+    res += " Mw2 apply-post-next";
 }
 
 }

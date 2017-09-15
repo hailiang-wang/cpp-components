@@ -24,17 +24,16 @@ Connect::~Connect(){};
 void Connect::use(Middleware& mw)
 {
     _middlewares.push_back(&mw);
+    _end = _middlewares.end();
 }
 
 void Connect::handle(std::string& req, std::string& res){
     std::vector<Middleware* >::iterator next = _middlewares.begin();
-    std::vector<Middleware* >::const_iterator end = _middlewares.end();
-    
     std::function<void() > compose;
     compose = [&]() mutable {
-        if (next != _middlewares.end()){
-            next = next + 1;
-            if(next!=end){
+        if (next != _end){
+            next++;
+            if(next != _end){
                 (*next)->apply(req, res, compose);
             }
         }
@@ -68,13 +67,6 @@ void Mw2::apply(std::string& req, std::string& res, std::function<void() >& next
 
 int main(int argc, char const *argv[])
 {
-    // auto glambda = [](int D) -> bool {
-    //     std::cout << "Print int " << D << endl;
-    //     return D < 0;
-    // };
-
-    // callback(12, glambda);
-    
     Connect::Connect app;
     Connect::Mw1 mw;
     app.use(mw);

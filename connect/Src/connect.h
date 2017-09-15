@@ -15,12 +15,6 @@
 
 using namespace std;
 
-template<typename Lambda>
-bool callback(std::string& Arg1, std::string& Arg2, Lambda Arg3){ // or Lambda&&, which is usually better
-    Arg3(Arg1, Arg2);
-    return false; // remember, all control paths must return a value
-}
-
 namespace Common {
 namespace Connect {
 class Middleware 
@@ -34,6 +28,7 @@ class Middleware
 class Connect{
  private:
     std::vector<Middleware* > _middlewares;
+    std::vector<Middleware* >::iterator _end;
 
  public:
     Connect();
